@@ -106,14 +106,27 @@ function update(){
     context.font  = '16px sans-serif';
     context.fillText(score,5,20)
 }
-function moveDoodler(e){
-    if(e.code =="ArrowRight" || e.code=="KeyD"){
-        velocityX = 4;
-        doodler.img = doodlerRightImg;
-    }
-    else if(e.code =="ArrowLeft" || e.code=="KeyA"){
-        velocityX = -4;
-        doodler.img = doodlerLeftImg;
+function moveDoodler(e) {
+    if (e.type === "keydown") {
+        if (e.code === "ArrowRight" || e.code === "KeyD") {
+            velocityX = 4;
+            doodler.img = doodlerRightImg;
+        } else if (e.code === "ArrowLeft" || e.code === "KeyA") {
+            velocityX = -4;
+            doodler.img = doodlerLeftImg;
+        }
+    } else if (e.type === "touchstart" || e.type === "touchmove") {
+        var touchX = e.touches[0].clientX;
+        var screenWidth = window.innerWidth;
+        var halfScreenWidth = screenWidth / 2;
+        
+        if (touchX > halfScreenWidth) {
+            velocityX = 4;
+            doodler.img = doodlerRightImg;
+        } else {
+            velocityX = -4;
+            doodler.img = doodlerLeftImg;
+        }
     }
 }
 function placePlatforms(){
